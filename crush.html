@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
+    <style>
+        /* Base Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Montserrat:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #ff7eb9;
+            --secondary: #ff65a3;
+            --accent: #7afcff;
+            --text: #333;
+            --bg: #fff5f7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 126, 185, 0.05) 0%, rgba(255, 126, 185, 0.05) 90%),
+                radial-gradient(circle at 90% 90%, rgba(122, 252, 255, 0.05) 0%, rgba(122, 252, 255, 0.05) 90%);
+        }
+        
+        /* Heart Particles */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            opacity: 0.6;
+            transform: rotate(45deg);
+            animation: float 8s linear infinite;
+        }
+        
+        .heart:before, 
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            font-family: 'Parisienne', cursive;
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            font-family: 'Parisienne', cursive;
+            font-weight: normal;
+            color: var(--secondary);
+            margin: 1.5rem 0;
+        }
+        
+        /* Main Content */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .photo-frame {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top; /* Moves focus to her face */
+}
+
+        
+        .intro-text {
+            text-align: center;
+            max-width: 600px;
+            font-size: 1.2rem;
+        }
+        
+        /* Love Notes */
+        .love-notes {
+            margin: 3rem 0;
+        }
+        
+        .note {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .note:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .poem {
+            margin: 2rem 0;
+            font-style: italic;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Interactive Elements */
+        .hidden-message {
+            cursor: pointer;
+            margin-top: 1rem;
+            color: var(--secondary);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .hidden-message:hover {
+            color: var(--primary);
+            transform: scale(1.02);
+        }
+        
+        .message-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 0 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .message-content.active {
+            max-height: 300px;
+            padding: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: var(--secondary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .photo-frame {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heart Particles -->
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <header>
+            <h1>For You</h1>
+            <p class="subtitle">A little corner of the internet just for someone special</p>
+        </header>
+        
+        <main>
+            <section class="hero">
+                <div class="photo-frame">
+            <img src="her-photo.png" alt="A beautiful smiling face that brightens my day, with kind eyes and a warm expression" />
+                </div>
+                
+                <div class="intro-text">
+                    <p>If I had to describe you in one word, it would be "extraordinary." You make every day brighter just by being you.</p>
+                </div>
+            </section>
+            
+            <section class="love-notes">
+                <article class="note">
+                    <h2>Things I Admire About You</h2>
+                    <ul>
+                        <li>Your kindness that knows no bounds</li>
+                        <li>The way your eyes light up when you talk about things you love</li>
+                        <li>Your strength in facing challenges</li>
+                        <li>Your ability to make everyone feel valued</li>
+                        <li>The beautiful way you see the world</li>
+                    </ul>
+                </article>
+                
+                <article class="note">
+                    <h2>A Little Message Just For You</h2>
+                    <p>From the moment we met, something felt different. There's a light about you that draws me in - your laughter, your thoughts, the way you see beauty in things others might overlook.</p>
+                    
+                    <div class="hidden-message" onclick="toggleMessage(this)">
+                        Click for a little secret...
+                    </div>
+                    <div class="message-content">
+                        <p>Even when we're apart, I find myself thinking about you. The way you light up when you talk about something you love makes me smile even on the toughest days. You're more special than you know.</p>
+                    </div>
+                </article>
+                
+                <article class="note poem">
+                    <h2>A Small Verse</h2>
+                    <p>
+                        If words could paint the way I feel,<br>
+                        A masterpiece would not be real,<br>
+                        For nothing in this world could show,<br>
+                        The light you bring, the warmth I know.<br>
+                        <br>
+                        Your smile like sunshine after rain,<br>
+                        Your voice, the sweetest sweet refrain,<br>
+                        And every moment by your side,<br>
+                        Is where my heart wants to reside.
+                    </p>
+                </article>
+                
+                <article class="note">
+                    <!-- <h2>My Favorite Memories With You</h2>
+                    <ul>
+                        <li>That time we [specific memory]</li>
+                        <li>When you [adorable thing they did]</li>
+                        <li>Our conversations about [meaningful topic]</li>
+                    </ul> -->
+                    
+                    <div class="hidden-message" onclick="toggleMessage(this)">
+                        One more thing to say...
+                    </div>
+                    <div class="message-content">
+                        <p>No matter where life takes us, I'll always cherish those moments with you. Thank you for being exactly who you are.</p>
+                    </div>
+                </article>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Created with love, just for you</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Create floating hearts
+        document.addEventListener('DOMContentLoaded', function() {
+            const heartsContainer = document.getElementById('hearts');
+            
+            for (let i = 0; i < 15; i++) {
+                createHeart();
+            }
+            
+            // Add new hearts periodically
+            setInterval(createHeart, 1500);
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Random position
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '100vh';
+                
+                // Random size
+                const size = Math.random() * 15 + 10;
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                
+                // Random duration for animation
+                heart.style.animationDuration = Math.random() * 6 + 4 + 's';
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                }, 12000);
+            }
+        });
+        
+        // Toggle hidden messages
+        function toggleMessage(element) {
+            const message = element.nextElementSibling;
+            message.classList.toggle('active');
+            
+            if (message.classList.contains('active')) {
+                element.textContent = 'Close';
+            } else {
+                element.textContent = element.dataset.originalText || 'Click for a little secret...';
+            }
+        }
+        
+        // Store original text
+        const hiddenMessages = document.querySelectorAll('.hidden-message');
+        hiddenMessages.forEach(msg => {
+            msg.dataset.originalText = msg.textContent;
+        });
+    </script>
+</body>
+</html>
+
