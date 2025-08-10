@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Sunshine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff5f5 0%, #fdf7ff 100%);
+      color: #634369;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Petal Animation */
+    .petal {
+      position: absolute;
+      background: rgba(255, 182, 193, 0.7);
+      width: 20px;
+      height: 20px;
+      border-radius: 60% 0 60% 0;
+      transform: rotate(45deg);
+      animation: falling linear infinite;
+      z-index: 0;
+      filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.5));
+    }
+
+    @keyframes falling {
+      0% {
+        transform: translate(0, 0) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: 
+          translate(var(--endX), 100vh) 
+          rotate(calc(var(--rotation) * 1deg))
+          scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Message Animation */
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(-2deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(-2deg); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Heartbeat Animation */
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .heartbeat {
+      animation: heartbeat 2s infinite;
+    }
+
+    /* Waving Hand Animation */
+    @keyframes wave {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(14deg); }
+      20% { transform: rotate(-8deg); }
+      30% { transform: rotate(14deg); }
+      40% { transform: rotate(-4deg); }
+      50% { transform: rotate(10deg); }
+      60% { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .wave {
+      display: inline-block;
+      animation: wave 2s infinite;
+      transform-origin: 70% 70%;
+    }
+
+    /* Brighten Effect */
+    @keyframes brighten {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+      100% { filter: brightness(1); }
+    }
+
+    /* Animation Styles */
+    .heart-animation {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Slide Up Animation */
+    @keyframes slide-up {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-slide-up {
+      animation: slide-up 0.6s ease-out forwards;
+    }
+
+    .brighten {
+      animation: brighten 4s infinite;
+    }
+  </style>
+</head>
+<body class="relative">
+  <!-- Background Petals -->
+  <div id="petals-container"></div>
+
+  <div class="container mx-auto px-4 py-12 max-w-4xl relative z-10">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 font-['Dancing_Script'] text-purple-700 floating">
+        For My Beautiful Rose
+      </h1>
+      <div class="w-24 h-1 bg-pink-300 mx-auto mb-8"></div>
+      <p class="text-xl text-gray-600 mb-2">Hope you're feeling better today</p>
+
+      <!-- Peonies Image -->
+      <div class="max-w-md mx-auto my-12 heartbeat">
+        <img 
+          src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4b1fa77d-5dbe-483c-8c9c-1d657d40c1cb.png" 
+          alt="Lush pink peony flowers in full bloom with delicate petals and morning dew drops" 
+          class="rounded-xl shadow-lg w-full h-auto border-4 border-white"
+        >
+      </div>
+
+      <!-- Health Status with Interactive Animation -->
+      <div class="bg-white bg-opacity-80 rounded-2xl p-6 shadow-lg mb-12">
+        <h2 class="text-3xl font-semibold mb-4 text-purple-800">
+          <span class="wave">👋</span> How are you feeling today?
+        </h2>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+          <button onclick="showStatus('fever')" class="health-btn px-6 py-3 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition-all shadow hover:shadow-lg">
+            🤒 Still Have Fever
+          </button>
+          <button onclick="showStatus('better')" class="health-btn px-6 py-3 rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition-all shadow hover:shadow-lg">
+            😊 Getting Better
+          </button>
+          <button onclick="showStatus('nodata')" class="health-btn px-6 py-3 rounded-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-all shadow hover:shadow-lg">
+            🌸 All Clear!
+          </button>
+        </div>
+
+        <!-- Fever Care Section -->
+        <div id="fever-care" class="hidden mt-6 p-6 rounded-xl bg-gradient-to-r from-red-50 to-pink-100 scroll-section transform transition-all duration-500 translate-y-10 opacity-0">
+          <h3 class="text-2xl font-semibold mb-4 text-red-600">Take Good Care of Yourself</h3>
+          <ul class="text-lg space-y-3">
+            <li>🤒 Keep monitoring your temperature regularly</li>
+            <li>💊 Take your medicines on time</li>
+            <li>💦 Drink plenty of fluids and stay hydrated</li>
+            <li>🛌 Get lots of rest and sleep</li>
+            <li>🍲 Eat light, healthy meals</li>
+          </ul>
+          <button onclick="hideFeverCare()" class="mt-4 px-4 py-2 bg-white rounded-lg shadow">I'll follow this 💖</button>
+        </div>
+
+        <!-- Happy Message Section -->
+        <div id="happy-message" class="hidden mt-6 p-6 rounded-xl scroll-section transform transition-all duration-500 translate-y-10 opacity-0">
+          <div id="better-message" class="hidden bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-4 text-teal-600">Your Strength is Showing! 💪</h3>
+            <p class="text-lg mb-4">Each day your vibrant energy returns a little more...</p>
+            <p class="text-xl font-medium">Keep nourishing that beautiful spirit of yours!</p>
+          </div>
+          <div id="clear-message" class="hidden bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-4 text-indigo-600">Fresh Start Ahead! 🌟</h3>
+            <p class="text-lg mb-4">Like a peony after rain, you've emerged refreshed and renewed...</p>
+            <p class="text-xl font-medium">Time to blossom brighter than ever!</p>
+            <div class="mt-4 text-center animate-bounce">🌸🌸🌸</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Healing Message -->
+      <div id="healing-message" class="hidden bg-white bg-opacity-80 rounded-2xl p-8 shadow-lg mb-12 transform transition-all hover:scale-[1.02] duration-300 scroll-section">
+        <h2 class="text-3xl font-semibold mb-6 text-purple-800">Wishing You a Speedy Recovery</h2>
+        <div class="prose max-w-none text-gray-700">
+          <p class="text-xl mb-4">💖 I know these days must be tough with the fever, but I hope every moment is bringing you closer to feeling your vibrant self again.</p>
+          <p class="text-xl mb-4">🌸 Your beautiful peonies are waiting to bloom along with your smile, and I'm here praying for your fast recovery.</p>
+          <p class="text-xl">❤️ Remember to drink plenty of water, get lots of rest, and know that I'm thinking about you every moment.</p>
+        </div>
+      </div>
+
+      <!-- Hidden Message Reveal -->
+      <div class="text-center mt-16">
+        <button onclick="revealSpecialMessage()" class="special-btn px-8 py-4 bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-full text-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+          ✨ Click for a Special Surprise
+        </button>
+        <div id="special-message" class="hidden mt-8 p-6 bg-white rounded-xl shadow-md max-w-md mx-auto animate-bounce">
+          <h3 class="text-3xl font-bold mb-4 text-purple-600">Just For You ❤️</h3>
+          <p class="text-xl mb-4">"The flower that blooms in adversity is the most rare and beautiful of all."</p>
+          <div class="heart-animation w-16 h-16 mx-auto my-4">💐</div>
+          <p class="text-lg">Every time I see you smile, my world gets a little brighter. May this virtual bouquet bring you some of the happiness you bring me.</p>
+          <div class="text-4xl mt-4">
+            <span class="animate-pulse">🌹</span>
+            <span class="animate-bounce">🌸</span>
+            <span class="animate-ping">🌺</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-8 text-gray-500 text-sm">
+    Made with ❤️ for someone very special
+  </footer>
+
+  <script>
+    // Create falling petals
+    function createPetals() {
+      const container = document.getElementById('petals-container');
+      const colors = ['#ffb6c1', '#ffc0cb', '#ffd1dc', '#ffd3e0'];
+      
+      for (let i = 0; i < 25; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        
+        // Random properties
+        const size = Math.random() * 15 + 5;
+        const duration = Math.random() * 15 + 10;
+        const delay = Math.random() * 5;
+        const endX = (Math.random() * 200 - 100) + 'px';
+        const rotation = Math.random() * 360;
+        
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size}px`;
+        petal.style.left = `${Math.random() * 100}vw`;
+        petal.style.top = `-50px`;
+        petal.style.animationDuration = `${duration}s`;
+        petal.style.animationDelay = `${delay}s`;
+        petal.style.setProperty('--endX', endX);
+        petal.style.setProperty('--rotation', rotation);
+        petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        container.appendChild(petal);
+      }
+    }
+
+    // Health status messages
+    function showStatus(status) {
+      const feverCare = document.getElementById('fever-care');
+      const happyMessage = document.getElementById('happy-message');
+      const betterMessage = document.getElementById('better-message');
+      const clearMessage = document.getElementById('clear-message');
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.health-btn').forEach(btn => {
+        btn.classList.remove('brighten');
+      });
+      
+      // Add active class to clicked button
+      event.target.classList.add('brighten');
+      
+      if (status === 'fever') {
+        happyMessage.classList.add('hidden');
+        betterMessage.classList.add('hidden');
+        clearMessage.classList.add('hidden');
+        feverCare.classList.remove('hidden');
+        document.getElementById('healing-message').classList.remove('hidden');
+        setTimeout(() => {
+          feverCare.classList.remove('translate-y-10');
+          feverCare.classList.remove('opacity-0');
+          document.getElementById('healing-message').classList.remove('translate-y-10');
+          document.getElementById('healing-message').classList.remove('opacity-0');
+        }, 20);
+      } else if (status === 'better') {
+        feverCare.classList.add('hidden');
+        document.getElementById('healing-message').classList.add('hidden');
+        happyMessage.classList.remove('hidden');
+        betterMessage.classList.remove('hidden');
+        clearMessage.classList.add('hidden');
+        setTimeout(() => {
+          happyMessage.classList.remove('translate-y-10');
+          happyMessage.classList.remove('opacity-0');
+        }, 20);
+      } else {
+        feverCare.classList.add('hidden');
+        document.getElementById('healing-message').classList.add('hidden');
+        happyMessage.classList.remove('hidden');
+        betterMessage.classList.add('hidden');
+        clearMessage.classList.remove('hidden');
+        setTimeout(() => {
+          happyMessage.classList.remove('translate-y-10');
+          happyMessage.classList.remove('opacity-0');
+        }, 20);
+      }
+    }
+
+    function hideFeverCare() {
+      document.getElementById('fever-care').classList.add('hidden');
+      document.getElementById('healing-message').classList.add('hidden');
+      document.getElementById('happy-message').classList.remove('hidden');
+    }
+
+    // Reveal special message
+    function revealSpecialMessage() {
+      const btn = event.target;
+      const message = document.getElementById('special-message');
+      
+      if (message.classList.contains('hidden')) {
+        message.classList.remove('hidden');
+        btn.textContent = "💖 Isn't That Sweet?";
+      } else {
+        message.classList.add('hidden');
+        btn.textContent = "✨ Click for a Special Surprise";
+      }
+    }
+
+    // Scroll animation handler
+    function handleScrollAnimation() {
+      const scrollSections = document.querySelectorAll('.scroll-section');
+      scrollSections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const isVisible = (window.innerHeight - sectionTop) > 100;
+        
+        if(isVisible) {
+          section.classList.add('animate-slide-up');
+          section.classList.remove('translate-y-10');
+          section.classList.remove('opacity-0');
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createPetals();
+      
+      // Add heartbeat to header after delay
+      setTimeout(() => {
+        document.querySelector('h1').classList.add('heartbeat');
+      }, 1000);
+
+      // Set up scroll listener and ensure healing massage starts hidden
+      window.addEventListener('scroll', handleScrollAnimation);
+      handleScrollAnimation(); // Run once on load
+      document.getElementById('healing-message').classList.add('hidden');
+    });
+  </script>
+</body>
+</html>
